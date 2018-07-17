@@ -2,7 +2,8 @@
 year=$(date "+%Y")
 month=$(date "+%m")
 day=$(date "+%d")
-
+filename=$year/$month/$day.md
+echo $filename
 if [ ! -e ./$year ]
 then
   # yyyyフォルダーが存在しないとき
@@ -14,9 +15,13 @@ then
   #mmフォルダーが存在しないとき
   mkdir $year/$month
 fi
-if [ ! -e ./$year/$month/$day.md ]
+if [ ! -e ./$filename ]
 then
-  cp template.md $year/$month/$day.md
+  cp template.md $filename
 else
-  echo "すでに${year}/${month}/${day}.mdファイルはあります"
+  echo "すでに${filename}ファイルはあります"
 fi
+sed -i -e "s/yyyy/$year/" $filename
+sed -i -e "s/mm/$month/" $filename
+sed -i -e "s/dd/$day/" $filename
+
